@@ -14,7 +14,7 @@ data "aws_ami" "app_ami" {
   owners = ["amazon"] # Amazon Linux 2023
 }
 
-resource "aws_instance" "web" {
+resource "aws_instance" "blog" {
   ami           = data.aws_ami.app_ami.id
   instance_type = var.instance_type
 
