@@ -11,7 +11,7 @@ data "aws_ami" "app_ami" {
     values = ["hvm"]
   }
 
-  owners = ["979382823631"] # Bitnami
+  owners = ["amazon"] # Amazon Linux 2023
 }
 
 data "aws_vpc" "default" {
