@@ -20,7 +20,7 @@ module "blog_vpc" {
   name = "dev"
   cidr = "10.0.0.0/16"
 
-  azs             = ["eu-west21a", "eu-west-2b", "eu-west-2c"]
+  azs             = ["us-west2a", "us-west-2b", "us-west-2c"]
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
@@ -47,7 +47,7 @@ resource "aws_instance" "blog" {
 module "blog_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "4.13.0"
-  
+
   name = "blog_new"
   vpc_id = module.blog_vpc.vpc_id
 
