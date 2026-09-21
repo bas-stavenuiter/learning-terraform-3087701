@@ -32,17 +32,24 @@ module "blog_vpc" {
 
 module "blog_autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
-  version = "6.5.2"
+  version = "~> 9.0"
 
   name = "blog"
 
   min_size            = 1
   max_size            = 2
   vpc_zone_identifier = module.blog_vpc.public_subnets
-  target_group_arns   = module.blog_alb.target_group_arns
   security_groups     = [module.blog_sg.security_group_id]
   instance_type       = var.instance_type
   image_id            = data.aws_ami.app_ami.id
+
+  # v9 replaced the target_group_arns list with a map of traffic sources.
+  # The ALB module still exposes target_group_arns, hence the index.
+  traffic_source_attachments = {
+    blog_alb = {
+      traffic_source_identifier = module.blog_alb.target_group_arns[0]
+    }
+  }
 }
 
 module "blog_alb" {
